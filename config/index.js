@@ -1,10 +1,10 @@
-const routeBuilder = require('../shared/RouteClass');
+const Router = require('../shared/BaseRouter');
 const Path = require('path');
 
 const all = {
   routes: {
     files: {
-      relativeTo: Path.join(__dirname, '..', routeBuilder.paths.public)
+      relativeTo: Path.join(__dirname, '..', Router.paths.public)
     }
   }
 };

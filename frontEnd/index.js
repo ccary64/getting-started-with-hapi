@@ -1,7 +1,7 @@
 'use strict';
 
 const Path = require('path');
-const routesBuilder = require('../shared/RouteClass');
+const Router = require('../shared/BaseRouter');
 const Inert = require('inert');
 
 module.exports = class FrontEnd {
@@ -12,11 +12,7 @@ module.exports = class FrontEnd {
   async registerRoutes() {
     await this.server.register(Inert);
     this.server.route(
-      routesBuilder.create(
-        routesBuilder.verbs.GET,
-        routesBuilder.paths.baseStatic,
-        this.staticDirectory
-      )
+      Router.get(Router.paths.baseStatic, this.staticDirectory)
     );
   }
 

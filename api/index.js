@@ -1,4 +1,4 @@
-const routesBuilder = require('../shared/RouteClass');
+const Router = require('../shared/BaseRouter');
 const controllers = require('./controllers');
 
 module.exports = class Api {
@@ -9,8 +9,8 @@ module.exports = class Api {
 
   get routes() {
     return [
-      routesBuilder.create(routesBuilder.verbs.GET, routesBuilder.paths.baseApi, controllers.Dog.create),
-      routesBuilder.create(routesBuilder.verbs.POST, routesBuilder.paths.baseApi, controllers.Dog.update),
+      Router.get(Router.paths.baseApi, controllers.Dog.create),
+      Router.post(Router.paths.baseApi, controllers.Dog.update),
     ];
   }
 }
