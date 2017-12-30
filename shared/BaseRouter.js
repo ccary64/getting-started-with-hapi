@@ -18,35 +18,19 @@ class BaseRouter {
   }
 
   get(path, handler) {
-    return {
-      method: this.verbs.GET,
-      path,
-      handler
-    }
+    return { method: this.verbs.GET, path, handler }
   }
 
   post(path, handler) {
-    return {
-      method: this.verbs.POST,
-      path,
-      handler
-    }
+    return { method: this.verbs.POST, path, handler }
   }
 
   put(path, handler) {
-    return {
-      method: this.verbs.PUT,
-      path,
-      handler
-    }
+    return { method: this.verbs.PUT, path, handler }
   }
 
   delete(path, handler) {
-    return {
-      method: this.verbs.DELETE,
-      path,
-      handler
-    }
+    return { method: this.verbs.DELETE, path, handler }
   }
 }
 
