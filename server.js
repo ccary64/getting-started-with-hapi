@@ -3,10 +3,16 @@
 const Hapi = require('hapi');
 const Api = require('./api');
 const FrontEnd = require('./frontEnd');
+const config = require('./config');
 
-const server = Hapi.server({ host: '0.0.0.0', port: 3000 });
-
-const api = new Api(server);
-const frontEnd = new FrontEnd(server);
-
-server.start();
+(async () => {
+  try {
+    const server = Hapi.server(config.development);
+    const api = new Api(server);
+    const frontEnd = new FrontEnd(server);
+    await frontEnd.registerRoutes();
+    server.start();
+  } catch (err) {
+    console.log(err);
+  }
+})();

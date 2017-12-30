@@ -1,21 +1,32 @@
-module.exports = class Api {
+'use strict';
+
+const Path = require('path');
+const routesBuilder = require('../shared/RouteClass');
+const Inert = require('inert');
+
+module.exports = class FrontEnd {
   constructor(server) {
     this.server = server;
-    this.server.route(this.routes());
   }
 
-  routes() {
-    return [{
-      method: 'GET',
-      path: '/',
-      options: {
-        handler: (request, h) => {
-          const response = h.response({state: 'success'});
-          response.type('application/json');
-          response.header('X-Custom', 'some-value');
-          return response;
-        }
+  async registerRoutes() {
+    await this.server.register(Inert);
+    this.server.route(
+      routesBuilder.create(
+        routesBuilder.verbs.GET,
+        routesBuilder.paths.baseStatic,
+        this.staticDirectory
+      )
+    );
+  }
+
+  get staticDirectory() {
+    return {
+      directory: {
+        path: '.',
+        redirectToSlash: true,
+        index: true
       }
-    }];
+    }
   }
 }
