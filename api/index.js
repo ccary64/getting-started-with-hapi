@@ -1,16 +1,12 @@
-const Router = require('../shared/BaseRouter');
 const controllers = require('./controllers');
 
 module.exports = class Api {
-  constructor(server) {
-    this.server = server;
-    this.server.route(this.routes);
+  constructor(router) {
+    this.router = router;
   }
 
-  get routes() {
-    return [
-      Router.get(Router.paths.baseApi, controllers.Dog.create),
-      Router.post(Router.paths.baseApi, controllers.Dog.update),
-    ];
+  registerRoutes() {
+    this.router.get(this.router.paths.baseApi, controllers.Dog.create);
+    this.router.post(this.router.paths.baseApi, controllers.Dog.update);
   }
 }

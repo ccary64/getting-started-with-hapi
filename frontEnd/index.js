@@ -1,27 +1,32 @@
 'use strict';
 
 const Path = require('path');
-const Router = require('../shared/BaseRouter');
-const Inert = require('inert');
 
 module.exports = class FrontEnd {
-  constructor(server) {
-    this.server = server;
+  constructor(router) {
+    this.router = router;
   }
 
   async registerRoutes() {
-    await this.server.register(Inert);
-    this.server.route(
-      Router.get(Router.paths.baseStatic, this.staticDirectory)
-    );
+    this.router.get(this.router.paths.baseStatic, this.staticDirectory);
+    this.router.get(this.router.paths.catchAll, this.indexPage);
+    this.router.all(this.router.paths.catchAll, this.missingPage);
+  }
+
+  indexPage(request, h) {
+    return h.file('index.html')
+  }
+
+  missingPage(request, h) {
+    return h.response('The page was not found').code(404);
   }
 
   get staticDirectory() {
     return {
       directory: {
         path: '.',
-        redirectToSlash: true,
-        index: true
+        redirectToSlash: false,
+        index: false
       }
     }
   }

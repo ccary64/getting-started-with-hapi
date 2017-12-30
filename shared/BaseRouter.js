@@ -1,37 +1,55 @@
+
+'use strict';
+
+const Inert = require('inert');
+
 class BaseRouter {
+  constructor(server) {
+    this.server = server;
+  }
   get verbs() {
     return {
       GET: 'GET',
       PUT: 'PUT',
       POST: 'POST',
-      DELETE: 'DELETE'
+      DELETE: 'DELETE',
+      ALL: '*'
     }
   }
 
   get paths() {
     return {
       baseApi: '/api',
-      baseStatic: '/{param*}',
+      baseStatic: '/public/{param*}',
       public: '/public',
-      base: '/'
+      base: '/',
+      catchAll: '/{p*}'
     }
   }
 
+  async plugins() {
+    await this.server.register(Inert);
+  }
+
   get(path, handler) {
-    return { method: this.verbs.GET, path, handler }
+    this.server.route({ method: this.verbs.GET, path, handler });
   }
 
   post(path, handler) {
-    return { method: this.verbs.POST, path, handler }
+    this.server.route({ method: this.verbs.POST, path, handler });
   }
 
   put(path, handler) {
-    return { method: this.verbs.PUT, path, handler }
+    this.server.route({ method: this.verbs.PUT, path, handler });
   }
 
   delete(path, handler) {
-    return { method: this.verbs.DELETE, path, handler }
+    this.server.route({ method: this.verbs.DELETE, path, handler });
+  }
+
+  all(path, handler) {
+    this.server.route({ method: this.verbs.ALL, path, handler });
   }
 }
 
-module.exports = new BaseRouter();
+module.exports = BaseRouter;

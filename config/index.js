@@ -4,7 +4,7 @@ const Path = require('path');
 const all = {
   routes: {
     files: {
-      relativeTo: Path.join(__dirname, '..', Router.paths.public)
+      relativeTo: Path.join(__dirname, '..', '/public')
     }
   }
 };
