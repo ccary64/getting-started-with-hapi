@@ -15,6 +15,7 @@ const Router = require('./shared/BaseRouter');
     const frontEnd = new FrontEnd(router);
 
     await router.plugins();
+    
     api.registerRoutes();
     await frontEnd.registerRoutes();
 
